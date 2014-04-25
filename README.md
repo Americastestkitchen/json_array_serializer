@@ -1,4 +1,4 @@
-# JSONArraySerializer
+n# JSONArraySerializer
 
 A class to serialize and deserialize arrays of JSON strings. This is useful when doing things like saving arrays of objects to a database or file, or sending them over the wire.
 
@@ -44,7 +44,7 @@ end
 You can also pass in a class to load the individual JSON objects as when extending the base `JSONArraySerizalizer`.
 
 ```ruby
-class Developer < ActiveRecord::Base
+class Developer < OpenStruct
   def develop(name)
     # Write code.
   end
