@@ -10,7 +10,7 @@ describe JSONArraySerializer do
       end
     end
 
-    describe JSONArraySerializer, '#load' do
+    describe '#load' do
       it 'returns an empty array given an empty array' do
         expect(serializer.load([])).to eq([])
       end
@@ -24,9 +24,14 @@ describe JSONArraySerializer do
         array = Array.new(5, "{}")
         expect(serializer.load(array).reject { |e| e.is_a? Hash }).to be_empty
       end
+
+      it 'loads arrays of JSON with data' do
+        array = Array.new(5, "{\"foo\":\"bar\",\"baz\":1337}")
+        expect(serializer.load(array).first).to eq({'foo' => 'bar', 'baz' => 1337})
+      end
     end
 
-    describe JSONArraySerializer, '#dump' do
+    describe '#dump' do
       it 'returns an empty array given an empty array' do
         expect(serializer.dump([])).to eq([])
       end
@@ -42,6 +47,11 @@ describe JSONArraySerializer do
           serializer.dump(array).map { |e| JSON.load(e) }
         }.not_to raise_error
       end
+
+      it 'dumps hashes with data' do
+        array = Array.new(5, {foo: 'bar', baz: 1337})
+        expect(serializer.dump(array).first).to eq("{\"foo\":\"bar\",\"baz\":1337}")
+      end
     end
   end
 
@@ -54,7 +64,7 @@ describe JSONArraySerializer do
       end
     end
 
-    describe JSONArraySerializer, '#load' do
+    describe '#load' do
       it 'returns an empty array given an empty array' do
         expect(serializer.load([])).to eq([])
       end
@@ -68,9 +78,14 @@ describe JSONArraySerializer do
         array = Array.new(5, "{}")
         expect(serializer.load(array).reject { |e| e.is_a? OpenStruct }).to be_empty
       end
+
+      it 'loads arrays of JSON with data' do
+        array = Array.new(5, "{\"foo\":\"bar\",\"baz\":1337}")
+        expect(serializer.load(array).first).to eq(OpenStruct.new(foo: 'bar', baz: 1337))
+      end
     end
 
-    describe JSONArraySerializer, '#dump' do
+    describe '#dump' do
       it 'returns an empty array given an empty array' do
         expect(serializer.dump([])).to eq([])
       end
@@ -85,6 +100,11 @@ describe JSONArraySerializer do
         expect {
           serializer.dump(array).map { |e| JSON.load(e) }
         }.not_to raise_error
+      end
+
+      it 'dumps OpenStructs with data' do
+        array = Array.new(5, OpenStruct.new(foo: 'bar', baz: 1337))
+        expect(serializer.dump(array).first).to eq("{\"foo\":\"bar\",\"baz\":1337}")
       end
     end
   end

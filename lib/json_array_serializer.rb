@@ -23,7 +23,13 @@ class JSONArraySerializer
   # into an array of element_classes.
   #
   def load(array)
-    array.map { |e| element_class.new(JSON.load(e)) }
+    array.map do |e|
+      if element_class == Hash
+        JSON.load(e)
+      else
+        element_class.new(JSON.load(e))
+      end
+    end
   end
 
   # [element_class] -> [JSON String]
@@ -31,6 +37,12 @@ class JSONArraySerializer
   # into JSON Strings, and returns the array of them.
   #
   def dump(array)
-    array.map { |e| JSON.dump(e.to_h) }
+    array.map do |e|
+      if element_class == Hash
+        JSON.dump(e)
+      else
+        JSON.dump(e.to_h)
+      end
+    end
   end
 end
