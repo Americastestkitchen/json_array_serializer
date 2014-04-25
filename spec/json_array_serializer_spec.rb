@@ -53,6 +53,28 @@ describe JSONArraySerializer do
         expect(serializer.dump(array).first).to eq("{\"foo\":\"bar\",\"baz\":1337}")
       end
     end
+
+    it 'dumps and loads equivalent arrays' do
+      array = [
+        { 'foo' => 'bar' },
+        { 'name' => 'nate', 'age' => 21 },
+        { 'ramble' => 'rara', 'float' => 21.13 }
+      ]
+      expect(serializer.load(serializer.dump(array))).to eq(array)
+    end
+
+    it 'converts symbols to strings' do
+      array = [
+        { foo: 'bar' },
+        { name: 'nate', age: 21 },
+        { ramble: 'rara', float: 21.13 },
+        { symbol: :very_symbol },
+        { hash: { 'foo' => 'bar' } },
+        { symbol_hash: { foo: 'bar' } }
+      ]
+      expected = array.map(&:stringify_hash)
+      expect(serializer.load(serializer.dump(array))).to eq(expected)
+    end
   end
 
   context 'with class argument to .new' do
