@@ -1,4 +1,4 @@
-n# JSONArraySerializer
+# JSONArraySerializer
 
 A class to serialize and deserialize arrays of JSON strings. This is useful when doing things like saving arrays of objects to a database or file, or sending them over the wire.
 
