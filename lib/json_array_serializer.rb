@@ -24,11 +24,8 @@ class JSONArraySerializer
   #
   def load(array)
     array.map do |e|
-      if element_class == Hash
-        JSON.load(e)
-      else
-        element_class.new(JSON.load(e))
-      end
+      hash = JSON.load(e)
+      (element_class == Hash) ? hash : element_class.new(hash)
     end
   end
 
@@ -38,11 +35,8 @@ class JSONArraySerializer
   #
   def dump(array)
     array.map do |e|
-      if element_class == Hash
-        JSON.dump(e)
-      else
-        JSON.dump(e.to_h)
-      end
+      hash = (element_class == Hash) ? e : e.to_h
+      JSON.dump(hash)
     end
   end
 end
