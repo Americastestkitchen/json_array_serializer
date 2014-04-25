@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = JSONArraySerializer::VERSION
   spec.authors       = ["Nathan Lilienthal"]
   spec.email         = ["nathan@nixpulvis.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Simple serialization for arrays of things to arrays of JSON.}
+  spec.description   = %q{Provides an common interface to convert between arrays of objects that implement .new and #to_h methods to arrays of JSON.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
