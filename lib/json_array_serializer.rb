@@ -19,7 +19,7 @@ class JSONArraySerializer
     @column_type   = column_type
   end
 
-  # [JSON String] -> [element_class]
+  # [JSON String] || JSON String -> [element_class]
   # Takes an array of JSON strings and loads them
   # into an array of element_classes.
   #
@@ -37,7 +37,7 @@ class JSONArraySerializer
     end
   end
 
-  # [element_class] -> [JSON String]
+  # [element_class] -> [JSON String] || JSON String
   # Takes an array of element_classes and dumps them
   # into JSON Strings, and returns the array of them.
   #
