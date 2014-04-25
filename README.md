@@ -54,3 +54,10 @@ class Company < ActiveRecord::Base
   serialize :developers, JSONArraySerializer.new(Developer)
 end
 ```
+
+The class you pass to `JSONArraySerializer.new` __must__ have the following two methods.
+
+```
+# A.new : Hash -> A
+# a.to_h : -> Hash (where a is an instance of A)
+```
