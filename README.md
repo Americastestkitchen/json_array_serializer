@@ -44,7 +44,7 @@ end
 You can also pass in a class to load the individual JSON objects as when extending the base `JSONArraySerizalizer`.
 
 ```ruby
-class Developer
+class Developer < ActiveRecord::Base
   def develop(name)
     # Write code.
   end
