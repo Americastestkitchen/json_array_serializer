@@ -1,7 +1,7 @@
 require 'json'
 require 'json_array_serializer/version'
 
-class JSONArraySerializer < Array
+class JSONArraySerializer
   attr_accessor :element_class
 
   # Class -> void (hook)
