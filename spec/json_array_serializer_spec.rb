@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe JSONArraySerializer do
 
+  it 'is an array' do
+    serializer = JSONArraySerializer.new
+    expect(serializer).to be_an(Array)
+  end
+
   context 'text backed serialization' do
     context 'default class (Hash)' do
       let(:serializer) { JSONArraySerializer.new }
