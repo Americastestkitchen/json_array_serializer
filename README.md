@@ -71,7 +71,7 @@ The `array_class` you pass to `JSONArraySerializer.new` __must__ have the follow
 
 ```
 # A.new : Array -> A
-# a.to_a : -> Array (where a is an instance of A) ?????
+# a.to_a : -> Array (where a is an instance of A)
 ```
 
 ### Specifying the Database Type
