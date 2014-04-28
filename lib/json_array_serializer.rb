@@ -2,7 +2,7 @@ require 'json'
 require 'json_array_serializer/version'
 
 class JSONArraySerializer
-  attr_accessor :element_class
+  attr_accessor :element_class, :array_class
 
   # Class -> void (hook)
   # Sets up the new JSONArraySerializer with it's elements
@@ -14,44 +14,46 @@ class JSONArraySerializer
   # A.new : Hash -> A
   # a.to_h : -> Hash (where a is an instance of A)
   #
-  def initialize(element_class: Hash, column_type: :text)
+  def initialize(array_class: Array, element_class: Hash, column_type: :text)
+    @array_class   = array_class
     @element_class = element_class
     @column_type   = column_type
   end
 
-  # [JSON String] || JSON String -> [element_class]
+  # [JSON String] || JSON String -> array_class<element_class>
   # Takes an array of JSON strings and loads them
   # into an array of element_classes.
   #
   def load(data)
+    return data if data.nil?
+
     array = case @column_type
     when :array
-      data
+      data.map do |json|
+        hash = JSON.load(json)
+        (element_class == Hash) ? hash : element_class.new(hash)
+      end
     when :string, :text
-      JSON.load(data)
+      JSON.load(data).map do |hash|
+        (element_class == Hash) ? hash : element_class.new(hash)
+      end
     end
 
-    array.map do |json|
-      hash = JSON.load(json)
-      (element_class == Hash) ? hash : element_class.new(hash)
-    end
+    (array_class == Array) ? array : array_class.new(array)
   end
 
-  # [element_class] -> [JSON String] || JSON String
+  # array_class<element_class> -> [JSON String] || JSON String
   # Takes an array of element_classes and dumps them
   # into JSON Strings, and returns the array of them.
   #
-  def dump(array)
-    serialized_array = array.map do |e|
-      hash = (element_class == Hash) ? e : e.to_h
-      JSON.dump(hash)
-    end
+  def dump(data)
+    return data if data.nil?
 
     case @column_type
     when :array
-      serialized_array
+      data.to_a.map { |e| JSON.dump(e.to_h) }
     when :string, :text
-      JSON.dump(serialized_array)
+      JSON.dump(data.to_a.map { |e| e.to_h })
     end
   end
 end
