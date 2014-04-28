@@ -125,6 +125,10 @@ describe JSONArraySerializer do
         expect(serializer.dump(array)).to be_a(String)
       end
 
+      it 'returns a string given an array of another class' do
+        expect(serializer.dump([OpenStruct.new(foo: 'bar')])).to be_a(String)
+      end
+
       it 'JSON can load it' do
         expect { JSON.load(serializer.dump(array)) }.not_to raise_error
       end
@@ -158,6 +162,10 @@ describe JSONArraySerializer do
     describe '#dump' do
       it 'returns a string given an array of OpenStructs' do
         expect(serializer.dump(array)).to be_a(String)
+      end
+
+      it 'returns a string given an array of hashes' do
+        expect(serializer.dump([{foo: 'bar'}])).to be_a(String)
       end
 
       it 'JSON can load it' do
