@@ -69,7 +69,7 @@ describe JSONArraySerializer do
     end
 
     context 'with OpenStruct class' do
-      let(:serializer) { JSONArraySerializer.new(OpenStruct) }
+      let(:serializer) { JSONArraySerializer.new(element_class: OpenStruct) }
 
       describe '.new' do
         it 'sets it\'s element class to a OpenStruct' do
@@ -136,7 +136,7 @@ describe JSONArraySerializer do
 
   context 'array backed serialization' do
     context 'default class (Hash)' do
-      let(:serializer) { JSONArraySerializer.new(Hash, :array) }
+      let(:serializer) { JSONArraySerializer.new(element_class: Hash, column_type: :array) }
 
       describe '.new' do
         it 'sets it\'s element class to a Hash' do
@@ -212,7 +212,7 @@ describe JSONArraySerializer do
     end
 
     context 'with OpenStruct class' do
-      let(:serializer) { JSONArraySerializer.new(OpenStruct, :array) }
+      let(:serializer) { JSONArraySerializer.new(element_class: OpenStruct, column_type: :array) }
 
       describe '.new' do
         it 'sets it\'s element class to a OpenStruct' do

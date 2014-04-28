@@ -14,7 +14,7 @@ class JSONArraySerializer
   # A.new : Hash -> A
   # a.to_h : -> Hash (where a is an instance of A)
   #
-  def initialize(element_class = Hash, column_type = :text)
+  def initialize(element_class: Hash, column_type: :text)
     @element_class = element_class
     @column_type   = column_type
   end
