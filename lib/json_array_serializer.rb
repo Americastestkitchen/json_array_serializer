@@ -9,10 +9,17 @@ class JSONArraySerializer
   # class. The element_class is what will be used to represent
   # each element of the stored JSON.
   #
-  # The element class MUST implement two methods:
+  # The option :array_class MUST implement two methods:
+  #
+  # A.new : Array -> A
+  # a.to_a : -> Array (where a is an instance of A)
+  #
+  # The option :element_class MUST implement two methods:
   #
   # A.new : Hash -> A
   # a.to_h : -> Hash (where a is an instance of A)
+  #
+  # The option :column_type MUST be one of :string | :text | :array.
   #
   def initialize(array_class: Array, element_class: Hash, column_type: :text)
     @array_class   = array_class
@@ -21,8 +28,8 @@ class JSONArraySerializer
   end
 
   # [JSON String] || JSON String -> array_class<element_class>
-  # Takes an array of JSON strings and loads them
-  # into an array of element_classes.
+  # Takes the data from the database, and loads them into an
+  # instance of `array_class` with elements of `element_class`.
   #
   def load(data)
     return data if data.nil?
@@ -43,8 +50,8 @@ class JSONArraySerializer
   end
 
   # array_class<element_class> -> [JSON String] || JSON String
-  # Takes an array of element_classes and dumps them
-  # into JSON Strings, and returns the array of them.
+  # Takes an instance of `array_class` with `element_class` elements
+  # and dumps them either a array of JSON or JSON itself for the database.
   #
   def dump(data)
     return data if data.nil?
