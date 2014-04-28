@@ -1,3 +1,3 @@
-class JSONArraySerializer
-  VERSION = "0.0.1"
+class JSONArraySerializer < Array
+  VERSION = "0.0.2"
 end
