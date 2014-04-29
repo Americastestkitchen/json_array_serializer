@@ -1,24 +1,18 @@
 # JSONArraySerializer
 
-A class to serialize and deserialize arrays of JSON strings. This is useful when doing things like saving arrays of objects to a database or file, or sending them over the wire.
+A class to serialize and deserialize arrays of JSON strings. This is useful when doing things like saving arrays of objects to a database or file, or sending them over the wire. The main focus of this gem is aimed at Rails's `ActiveRecord::Base#serialize`.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'json_array_serializer'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install json_array_serializer
+```ruby
+gem 'json_array_serializer'
+```
 
 ## Usage
 
-You can use the `JSONArraySerizalizer` directly on a attribute of a Rails model as follows.
+You can use the `JSONArraySerizalizer` directly on a attribute of a Rails model as follows. This will save the `bar` attribute as a string of JSON in the database, where `bar` is an array of hashes.
 
 ```ruby
 class Foo < ActiveRecord::Base
