@@ -49,8 +49,10 @@ class JSONArraySerializer
         (element_class == Hash) ? hash : element_class.new(hash)
       end
     when :string, :text
-      JSON.load(data).map do |hash|
-        (element_class == Hash) ? hash : element_class.new(hash)
+      if element_class == Hash
+        JSON.load(data)
+      else
+        JSON.load(data).map { |hash| element_class.new(hash) }
       end
     end
 
