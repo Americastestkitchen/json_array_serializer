@@ -21,10 +21,18 @@ class JSONArraySerializer
   #
   # The option :column_type MUST be one of :string | :text | :array.
   #
-  def initialize(array_class: Array, element_class: Hash, column_type: :text)
-    @array_class   = array_class
-    @element_class = element_class
-    @column_type   = column_type
+  def initialize(options = {})
+    options = {
+      array_class: Array,
+      element_class: Hash,
+      column_type: :text,
+      allow_nil: true
+    }.merge(options)
+
+    @array_class   = options[:array_class]
+    @element_class = options[:element_class]
+    @column_type   = options[:column_type]
+    @allow_nil     = options[:allow_nil]
   end
 
   # [JSON String] || JSON String -> array_class<element_class>
@@ -32,7 +40,7 @@ class JSONArraySerializer
   # instance of `array_class` with elements of `element_class`.
   #
   def load(data)
-    return data if data.nil?
+    return (@allow_nil ? nil : []) if data.nil?
 
     array = case @column_type
     when :array
@@ -54,7 +62,7 @@ class JSONArraySerializer
   # and dumps them either a array of JSON or JSON itself for the database.
   #
   def dump(data)
-    return data if data.nil?
+    return (@allow_nil ? nil : []) if data.nil?
 
     case @column_type
     when :array

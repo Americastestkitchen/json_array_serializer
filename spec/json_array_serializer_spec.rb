@@ -223,4 +223,36 @@ describe JSONArraySerializer do
       end
     end
   end
+
+  context 'with allow_nil set to false' do
+    let(:serializer) { JSONArraySerializer.new(allow_nil: false) }
+
+    describe '#load' do
+      it 'loads nil as []' do
+        expect(serializer.load(nil)).to eq([])
+      end
+    end
+
+    describe '#dump' do
+      it 'dumps nil as []' do
+        expect(['[]', []]).to include(serializer.dump(nil))
+      end
+    end
+  end
+
+  context 'with allow_nil set to true' do
+    let(:serializer) { JSONArraySerializer.new(allow_nil: true) }
+
+    describe '#load' do
+      it 'loads nil as nil' do
+        expect(serializer.load(nil)).to eq(nil)
+      end
+    end
+
+    describe '#dump' do
+      it 'dumps nil as nil' do
+        expect(serializer.dump(nil)).to eq(nil)
+      end
+    end
+  end
 end
