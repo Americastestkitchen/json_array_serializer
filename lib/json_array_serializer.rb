@@ -21,6 +21,10 @@ class JSONArraySerializer
   #
   # The option :column_type MUST be one of :string | :text | :array.
   #
+  # The option :allow_nil is a boolean which determines whether or not
+  # to load/dump nil values. If set to true (the default) it will load/dump
+  # nil when given nil. If set to false it will treat nil as an empty array.
+  #
   def initialize(options = {})
     options = {
       array_class: Array,
