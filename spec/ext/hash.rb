@@ -7,14 +7,15 @@ class Hash
   #
   def stringify
     inject({}) do |acc, (key, value)|
-      acc[key.to_s] = case value
-      when Symbol
-        value.to_s
-      when Hash
-        value.stringify
-      else
-        value
-      end
+      acc[key.to_s] =
+        case value
+        when Symbol
+          value.to_s
+        when Hash
+          value.stringify
+        else
+          value
+        end
       acc
     end
   end

@@ -42,19 +42,20 @@ class JSONArraySerializer
   def load(data)
     return (@allow_nil ? nil : []) if data.nil?
 
-    array = case @column_type
-    when :array
-      data.map do |json|
-        hash = JSON.load(json)
-        (element_class == Hash) ? hash : element_class.new(hash)
+    array =
+      case @column_type
+      when :array
+        data.map do |json|
+          hash = JSON.load(json)
+          (element_class == Hash) ? hash : element_class.new(hash)
+        end
+      when :string, :text
+        if element_class == Hash
+          JSON.load(data)
+        else
+          JSON.load(data).map { |hash| element_class.new(hash) }
+        end
       end
-    when :string, :text
-      if element_class == Hash
-        JSON.load(data)
-      else
-        JSON.load(data).map { |hash| element_class.new(hash) }
-      end
-    end
 
     (array_class == Array) ? array : array_class.new(array)
   end
