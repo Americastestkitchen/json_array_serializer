@@ -69,13 +69,19 @@ class JSONArraySerializer
   # and dumps them either a array of JSON or JSON itself for the database.
   #
   def dump(data)
-    return (@allow_nil ? nil : []) if data.nil?
-
     case @column_type
     when :array
-      data.to_a.map { |e| JSON.dump(e.to_h) }
+      if data.nil?
+        @allow_nil ? nil : []
+      else
+        data.to_a.map { |e| JSON.dump(e.to_h) }
+      end
     when :string, :text
-      JSON.dump(data.to_a.map { |e| e.to_h })
+      if data.nil?
+        @allow_nil ? nil : '[]'
+      else
+        JSON.dump(data.to_a.map { |e| e.to_h })
+      end
     end
   end
 end

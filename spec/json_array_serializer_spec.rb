@@ -225,17 +225,20 @@ describe JSONArraySerializer do
   end
 
   context 'with allow_nil set to false' do
-    let(:serializer) { JSONArraySerializer.new(allow_nil: false) }
+    let(:text_serializer)  { JSONArraySerializer.new(allow_nil: false) }
+    let(:array_serializer) { JSONArraySerializer.new(allow_nil: false, column_type: :array) }
 
     describe '#load' do
       it 'loads nil as []' do
-        expect(serializer.load(nil)).to eq([])
+        expect(text_serializer.load(nil)).to eq([])
+        expect(array_serializer.load(nil)).to eq([])
       end
     end
 
     describe '#dump' do
       it 'dumps nil as []' do
-        expect(['[]', []]).to include(serializer.dump(nil))
+        expect(text_serializer.dump(nil)).to eq('[]')
+        expect(array_serializer.dump(nil)).to eq([])
       end
     end
   end
