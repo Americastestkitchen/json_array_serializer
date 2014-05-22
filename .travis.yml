@@ -2,3 +2,13 @@ language: ruby
 rvm:
   - 2.0.0
   - 2.1.2
+
+notifications:
+  email: false
+  campfire:
+    rooms:
+      - americastestkitchen:4629fd26cd22100fd2c4dd901259a6e50379d7d5@410750
+    template:
+      - "json_array_serializer: %{author}: %{message} - Code Changed: %{compare_url} Build Details: %{build_url}"
+    on_failure: always
+    on_success: always
