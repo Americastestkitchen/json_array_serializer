@@ -1,4 +1,4 @@
-# JSONArraySerializer
+# JSONArraySerializer [![Build Status](https://travis-ci.org/Americastestkitchen/json_array_serializer.svg?branch=master)](https://travis-ci.org/Americastestkitchen/json_array_serializer)
 
 A class to serialize and deserialize arrays of JSON strings. This is useful when doing things like saving arrays of objects to a database or file, or sending them over the wire. The main focus of this gem is aimed at Rails's `ActiveRecord::Base#serialize`.
 
